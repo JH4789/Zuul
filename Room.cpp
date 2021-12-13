@@ -1,4 +1,4 @@
-#include <iostraem>
+#include <iostream>
 #include <cstring>
 #include <map>
 #include "Room.h"
@@ -9,8 +9,23 @@ void Room::setID(int newid){
 }
 void Room::setDescription(char* newdescription) {
   description = new char[100];
-  strcpy(title, newtitle);
+  strcpy(description, newdescription);
 }
-char* Room::getDescription() {
-  return description;
+void Room::printdetails() {
+  cout << description << endl;
+}
+void Room::setNorthExit() {
+  northexit = true;
+}
+void Room::setWestExit() {
+  westexit = true;
+}
+void Room::setSouthExit() {
+  southexit = true;
+}
+void Room::setEastExit() {
+  eastexit = true;
+}
+int Room::getID() {
+  return id;
 }

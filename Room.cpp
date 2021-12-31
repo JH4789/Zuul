@@ -8,21 +8,83 @@ void Room::setID(int newid){
   id = newid;
 }
 void Room::setDescription(char* newdescription) {
-  description = new char[100];
+  description = new char[1000];
   strcpy(description, newdescription);
 }
 void Room::printdetails() {
   cout << description << endl;
+  cout << "The exits from this room are: " << endl;
   if(id == 1) {
-    cout << "The exits from this room are: " << endl;
     cout << "NORTH EAST SOUTH WEST" << endl;
   }
-
-
-  cout << "The items in this room are: ";
+  if(id == 2) {
+    cout << "NORTH EAST SOUTH" << endl;
+  }
+  if(id == 3) {
+    cout << "EAST SOUTH" << endl;
+  }
+  if(id == 4) {
+    cout << "SOUTH WEST" << endl;
+  }
+  if(id == 5) {
+    cout << "NORTH SOUTH WEST" << endl;
+  }
+  if(id == 6) {
+    cout << "NORTH EAST" << endl;
+  }
+  if(id == 7) {
+    cout << "NORTH SOUTH" << endl;
+  }
+  if(id == 8) {
+    cout << "NORTH EAST SOUTH" << endl;
+  }
+  if(id == 9) {
+    cout << "NORTH" << endl;
+  }
+  if(id == 10) {
+    cout << "EAST SOUTH WEST" << endl;
+  }
+  if(id == 11) {
+    cout << "NORTH" << endl;
+  }
+  if(id == 12) {
+    cout << "WEST" << endl;
+  }
+  if(id == 13) {
+    cout << "EAST WEST";
+  }
+  if(id == 14) {
+    cout << "NORTH SOUTH WEST" << endl;
+  }
+  if(id == 15) {
+    cout << "NORTH SOUTH" << endl;
+  }
+  if(id == 16) {
+    cout << "SOUTH" << endl;
+  }
+  if(id == 17) {
+    cout << "NORTH" << endl;
+  }
   if(tri == true) {
     cout << "Trinity Force" << endl;
   }
+  if(sunfire == true) {
+    cout << "Sunfire Cape" << endl;
+  }
+  if (chemtank == true) {
+    cout << "Turbo Chemtank" << endl;
+  }
+  if(slayer == true) {
+    cout << "Kraken Slayer" << endl;
+  }
+  if(riftmaker == true) {
+    cout << "Riftmaker" << endl;
+  }
+
+
+
+  
+
   //Add other items here
 }
 /*

@@ -6,7 +6,7 @@
 using namespace std;
 
 class Room {
-
+  //Boring header file
  public:
   virtual void setID(int);
   virtual int getID();
@@ -17,12 +17,6 @@ class Room {
   virtual bool returnriftmaker();
   virtual bool returnslayer();
   virtual bool returnsunfire();
-  /*
-  virtual void setNorthExit();
-  virtual void setSouthExit();
-  virtual void setEastExit();
-  virtual void setWestExit();
-  */
   virtual void changetri();
   virtual void changechemtank();
   virtual void changeriftmaker();
@@ -36,13 +30,6 @@ protected:
   bool riftmaker;
   bool slayer;
   bool sunfire;
-  /*
-  bool northexit;
-  bool westexit;
-  bool eastexit;
-  bool southexit;
-  */
-
  private:
   
 };

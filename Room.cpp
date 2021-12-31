@@ -3,7 +3,7 @@
 #include <map>
 #include "Room.h"
 using namespace std;
-
+//Set ID
 void Room::setID(int newid){
   id = newid;
 }
@@ -11,6 +11,7 @@ void Room::setDescription(char* newdescription) {
   description = new char[1000];
   strcpy(description, newdescription);
 }
+//Details need to be manually coded in, alternative could have been digging through the map but that seemed tedious
 void Room::printdetails() {
   cout << description << endl;
   cout << "The exits from this room are: " << endl;
@@ -18,16 +19,16 @@ void Room::printdetails() {
     cout << "NORTH EAST SOUTH WEST" << endl;
   }
   if(id == 2) {
-    cout << "NORTH EAST SOUTH" << endl;
+    cout << "NORTH SOUTH WEST" << endl;
   }
   if(id == 3) {
-    cout << "EAST SOUTH" << endl;
+    cout << "WEST SOUTH" << endl;
   }
   if(id == 4) {
     cout << "SOUTH WEST" << endl;
   }
   if(id == 5) {
-    cout << "NORTH SOUTH WEST" << endl;
+    cout << "NORTH EAST SOUTH" << endl;
   }
   if(id == 6) {
     cout << "NORTH EAST" << endl;
@@ -51,7 +52,7 @@ void Room::printdetails() {
     cout << "WEST" << endl;
   }
   if(id == 13) {
-    cout << "EAST WEST";
+    cout << "EAST WEST" << endl;
   }
   if(id == 14) {
     cout << "NORTH SOUTH WEST" << endl;
@@ -80,27 +81,8 @@ void Room::printdetails() {
   if(riftmaker == true) {
     cout << "Riftmaker" << endl;
   }
-
-
-
-  
-
-  //Add other items here
 }
-/*
-void Room::setNorthExit() {
-  northexit = true;
-}
-void Room::setWestExit() {
-  westexit = true;
-}
-void Room::setSouthExit() {
-  southexit = true;
-}
-void Room::setEastExit() {
-  eastexit = true;
-}
-*/
+//Very helpful for just switching the boolean in the class
 void Room::changetri() {
   if(tri == false) {
     tri = true;
@@ -141,6 +123,7 @@ void Room::changesunfire() {
     sunfire = false;
   }
 }
+//Used to check for presence of item in the room
 bool Room::returntri() {
   return tri;
 }

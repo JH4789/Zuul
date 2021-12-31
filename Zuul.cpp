@@ -10,6 +10,8 @@ using namespace std;
 
 
 int main() {
+  //Maps used for the exits
+  //Four different maps, the first number is the current room, the second number is the destination room in that direction.
   map <int, int> northexits = {
     {1, 2},
     {2, 3},
@@ -39,9 +41,9 @@ int main() {
   
   map <int , int> eastexits = {
     
-    {2, 5},
+    {5, 2},
     {1, 13},
-    {3, 4},
+    {4, 3},
     {8, 10},
     {6, 1},
     {10, 12},
@@ -50,14 +52,14 @@ int main() {
 
   map < int , int> westexits = {
     {13, 1},
-    {5, 2},
-    {4, 3},
+    {2, 5},
+    {3, 4},
     {1, 6},
     {14, 13},
     {12, 10},
     {10, 8}
   };
-  
+  //Setup here, nothing to see
   vector <Room*> zuul;
   bool inventorytri;
   bool inventorychemtank;
@@ -65,14 +67,13 @@ int main() {
   bool inventoryslayer;
   bool inventoryriftmaker;
   int currentroom = 1;
-  //North is 1, East is 2, South is 3, West is 4
-  for(int i = 1 ; i < 17 ; i++) {
+  //Making all the rooms
+  for(int i = 1 ; i < 18 ; i++) {
     Room* newroom = new Room();
     newroom->setID(i);
     if(i == 1) {
       char description[] = "You arrive at a crossroad of regions. In all directions there seem to be bustling cities and dying slums";
       newroom->setDescription(description);
-      newroom->changetri();
     }
     if(i == 2) {
       char description[] = "This is the Hextech Foundry. The source of the magical energy source that powers much of Piltover.";
@@ -121,31 +122,58 @@ int main() {
       char description[] = "You are at the base of Mount Targon. Those who can survive the climb may find their place among the stars.";
       newroom->setDescription(description);
     }
+    if(i == 13) {
+      char description[] = "You are at in the Slaughter Docks. THe reek of sweat and blood wafts through the bodies of dead jaulfish.";
+      newroom->setDescription(description);
+      newroom->changeslayer();
+    }
+    if(i == 14) {
+      char description[] = "You are in the Serpent Isles. Worshippers of ancient gods dwell here away from the bustle and violence of Bilgewater.";
+      newroom->setDescription(description);
+    }
+    if(i == 15) {
+      char description[] = "You are in the Placidium of the Navori. Hub of Ionian resistance, it may soon fall to the relentless onslaught of the Noxian Empire.";
+      newroom->setDescription(description);
+    }
+    if(i == 16) {
+      char description[] = "You are in the Hirana Monastery. A certain rebel leader has taken refuge here, along with a set of blades honed through the edge of history.";
+      newroom->setDescription(description);
+      newroom->changetri();
+    }
+    if(i == 17) {
+      char description[] = "You are in the Vaults of Helia. Once a refuge for the foresaken, it now serves as a home for malevolence.";
+      newroom->setDescription(description);
+    }
 
     zuul.push_back(newroom);
   }
-
   bool running = true;
+  //Welcome message!
   cout << "Welcome to Zuul! You have arrived in the mysterious and magical world of Runeterra. Find 5 artifacts to return to your previous existence." << endl;
-  
-  
-  
   while(running == true) {
     char commandinput[100];
     char direction[100];
     char item[100];
+    //Win Condition
+    if(inventorytri == true && inventoryslayer == true && inventorysunfire == true && inventoryriftmaker == true && inventorychemtank == true) {
+      cout << "You have collected all 5 items!, you are free to return to your own world. Congrats!." << endl;
+      running = false;
+      exit(0);
+    }
+    //Looks through the vector for the room with matching id and prints details
     for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
      if((*it)->getID() == currentroom) {
        (*it)->printdetails();
      }
     }
-    cout << "Please enter a command for what you would like to do. Enter GO to choose a direction to go. Enter GET to pick up an item in the room. Enter QUIT to quit." << endl;
+    cout << "Please enter a command for what you would like to do. Enter GO to choose a direction to go. Enter GET to pick up an item in the room. Enter DROP to drop an item. Enter QUIT to quit." << endl;
     cin >> commandinput;
     if(strcmp(commandinput, "GO") == 0) {
       cout << "Enter the direction that you would like to go" << endl;
       cin.clear();
       cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       cin.get(direction, 100);
+      //Controls directions, sets currentroom according to the map
       if(strcmp(direction, "NORTH") == 0 && northexits[currentroom] != 0) {
         currentroom = northexits[currentroom];
       }
@@ -163,7 +191,8 @@ int main() {
       }
       continue;
     }
-    if(strcmp(commandinput, "GET") == 0) {
+    else if(strcmp(commandinput, "GET") == 0) {
+      //Checks the vector of Rooms to see if an item is present
       bool tripresent = false;
       bool chemtankpresent = false;
       bool riftmakerpresent = false;
@@ -188,11 +217,11 @@ int main() {
 	  }
 	}
       }
-      
       cout << "Please enter the name of the item that you would like to pick up" << endl;
       cin.clear();
       cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       cin.get(item, 100);
+      //Runs through the vector again to change possession of items
       if(strcmp(item, "Trinity Force") == 0 && tripresent == true) {
           for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
 	     if((*it)->getID() == currentroom) {
@@ -215,7 +244,7 @@ int main() {
           for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
 	     if((*it)->getID() == currentroom) {
 	       (*it)->changeriftmaker();
-	       inventorychemtank = true;
+	       inventoryriftmaker = true;
 	       cout << "You have picked up the Riftmaker" << endl;
 	     }
           }   
@@ -241,9 +270,9 @@ int main() {
       else {
 	cout << "The item you requested is not here" << endl;
       }
-  
     }
-    if(strcmp(commandinput, "DROP") == 0) {
+    //Same concept as getting the items
+    else if(strcmp(commandinput, "DROP") == 0) {
       char dropitem[100];
       cout << "Please enter the name of the item you want to drop." << endl;
       cin.clear();
@@ -260,7 +289,7 @@ int main() {
 	}
       }
       //Chemtank
-      if(strcmp(dropitem, "Turbo Chemtank") == 0 && inventorychemtank == true) {
+      else if(strcmp(dropitem, "Turbo Chemtank") == 0 && inventorychemtank == true) {
 	for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
           if((*it)->getID() == currentroom) {
 	    (*it)->changechemtank();
@@ -270,7 +299,7 @@ int main() {
 	}
       }
       //Riftmaker
-      if(strcmp(dropitem, "Riftmaker") == 0 && inventoryriftmaker == true) {
+      else if(strcmp(dropitem, "Riftmaker") == 0 && inventoryriftmaker == true) {
 	for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
           if((*it)->getID() == currentroom) {
 	    (*it)->changeriftmaker();
@@ -280,18 +309,34 @@ int main() {
 	}
       }
       //Sunfire
-      if(strcmp(dropitem, "Sunfire") == 0 && inventorysunfire == true) {
+      else if(strcmp(dropitem, "Sunfire") == 0 && inventorysunfire == true) {
 	for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
           if((*it)->getID() == currentroom) {
 	    (*it)->changesunfire();
 	    inventorysunfire = false;
-	    cout << "You have dropped the Riftmaker" << endl;
+	    cout << "You have dropped the Sunfire Cape" << endl;
 	  }
 	}
       }
       //Slayer
+      else if(strcmp(dropitem, "Kraken Slayer") == 0 && inventoryslayer == true) {
+	for(vector<Room*>:: iterator it = zuul.begin(); it < zuul.end(); ++it) {
+          if((*it)->getID() == currentroom) {
+	    (*it)->changeslayer();
+	    inventoryslayer = false;
+	    cout << "You have dropped the Kraken Slayer" << endl;
+	  }
+	}
+      }
+      else {
+	cout << "The item requested is not in your inventory" << endl;
+      }
+    }
+    else {
+      cout << "Please enter a valid command" << endl;
     }
   }
+  return 0;
 }
 
 

@@ -332,6 +332,9 @@ int main() {
 	cout << "The item requested is not in your inventory" << endl;
       }
     }
+    else if(strcmp(commandinput, "QUIT") == 0) {
+      exit(0);
+    }
     else {
       cout << "Please enter a valid command" << endl;
     }
